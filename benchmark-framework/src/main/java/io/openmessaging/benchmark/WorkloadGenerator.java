@@ -138,7 +138,7 @@ public class WorkloadGenerator implements AutoCloseable {
 			try {
 			    buildAndDrainBacklog(topics, acceptableBacklog);
 			} catch (IOException e) {
-			    e.printStackTrace();
+                log.error("Error {}", e);
 			}
 		    });
 	    }
@@ -150,6 +150,7 @@ public class WorkloadGenerator implements AutoCloseable {
 	    runCompleted = true;
 	} catch (Exception e) {
 	    log.info("----- Exception ------");
+        log.error("Error {}", e);
 	}
 
         worker.stopAll();
