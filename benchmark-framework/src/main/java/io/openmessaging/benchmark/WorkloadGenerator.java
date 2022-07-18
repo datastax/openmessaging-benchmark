@@ -173,7 +173,7 @@ public class WorkloadGenerator implements AutoCloseable {
         // This is work around the fact that there's no way to have a consumer ready in Kafka without first publishing
         // some message on the topic, which will then trigger the partitions assignment to the consumers
 
-        int expectedMessages = workload.topics * workload.subscriptionsPerTopic;
+        int expectedMessages = workload.topics * (workload.subscriptionsAreSelectors ? 1 : workload.subscriptionsPerTopic);
 
         // In this case we just publish 1 message and then wait for consumers to receive the data
         worker.probeProducers();
@@ -358,7 +358,8 @@ public class WorkloadGenerator implements AutoCloseable {
         while (true) {
 	    // Retrieve stats and calculate the current backlog in messages
             CountersStats stats = worker.getCountersStats();
-            long currentBacklogSize = workload.subscriptionsPerTopic * stats.messagesSent - stats.messagesReceived;
+            long currentBacklogSize = (workload.subscriptionsAreSelectors ? 1 : workload.subscriptionsPerTopic) *
+		stats.messagesSent - stats.messagesReceived;
 
             if (currentBacklogSize >= requestedBacklogSize) {
 		break;
@@ -400,7 +401,8 @@ public class WorkloadGenerator implements AutoCloseable {
 
         while (true) {
             CountersStats stats = worker.getCountersStats();
-            double currentBacklog = workload.subscriptionsPerTopic * stats.messagesSent - stats.messagesReceived;
+            double currentBacklog = (workload.subscriptionsAreSelectors ? 1 : workload.subscriptionsPerTopic) *
+		stats.messagesSent - stats.messagesReceived;
             if (currentBacklog <= acceptableBacklog) {
                 log.info("--- Completed backlog draining ---");
                 needToWaitForBacklogDraining = false;
@@ -455,8 +457,8 @@ public class WorkloadGenerator implements AutoCloseable {
             double consumeRate = stats.messagesReceived / elapsed;
             double consumeThroughput = stats.bytesReceived / elapsed / 1024 / 1024;
 
-            long currentBacklog = workload.subscriptionsPerTopic * stats.totalMessagesSent
-                    - stats.totalMessagesReceived;
+            long currentBacklog = (workload.subscriptionsAreSelectors ? 1 : workload.subscriptionsPerTopic) *
+		stats.totalMessagesSent - stats.totalMessagesReceived;
 
             log.info(
                     "Pub rate {} msg/s / {} MB/s | Cons rate {} msg/s / {} MB/s | Backlog: {} K | Pub Latency (ms) avg: {} - 50%: {} - 99%: {} - 99.9%: {} - Max: {}",

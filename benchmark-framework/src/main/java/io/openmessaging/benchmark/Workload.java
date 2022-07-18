@@ -45,6 +45,12 @@ public class Workload {
 
     public int consumerPerSubscription;
 
+    /**
+     * For some testing we use a subscription for a selector. We craft these to consume messages so that each message
+     * is consumed by only one subscription. This config controls the backlog calculations.
+     */
+    public boolean subscriptionsAreSelectors = false;
+
     public int producerRate;
     /**
      * If the producerRate = 0, the generator will slowly grow producerRate to find the maximum balanced rate
