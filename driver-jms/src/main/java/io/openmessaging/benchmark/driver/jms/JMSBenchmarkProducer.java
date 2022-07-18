@@ -45,12 +45,14 @@ public class JMSBenchmarkProducer implements BenchmarkProducer {
     private final Destination destination;
     private final MessageProducer producer;
     private final boolean useAsyncSend;
+    private long count;
     private final List<JMSConfig.AddProperty> properties;
     public JMSBenchmarkProducer(Session session, Destination destination, boolean useAsyncSend, List<JMSConfig.AddProperty> properties) throws Exception {
         this.session = session;
         this.destination = destination;
         this.useAsyncSend = useAsyncSend;
         this.producer = session.createProducer(destination);
+        this.count = 0;
         this.properties = properties != null ? properties : Collections.emptyList();
     }
 
@@ -72,10 +74,15 @@ public class JMSBenchmarkProducer implements BenchmarkProducer {
                 bytesMessage.setStringProperty("JMSXGroupID", key.get());
             }
             for (JMSConfig.AddProperty prop : properties) {
-                bytesMessage.setStringProperty(prop.name, prop.value);
+                // allow for some metadata to be only for every n of m messages
+                if ( prop.of <= 0 || (count % prop.of) == prop.every ) {
+                    bytesMessage.setStringProperty(prop.name, prop.value);
+                }
             }
-	    // Add a timer property for end to end
-	    bytesMessage.setLongProperty("E2EStartMillis",System.currentTimeMillis());
+            // avoid eventual overflow
+            count = (count + 1) % 1000000L;
+            // Add a timer property for end to end
+            bytesMessage.setLongProperty("E2EStartMillis",System.currentTimeMillis());
             if (useAsyncSend) {
                 producer.send(bytesMessage, new CompletionListener()
                 {
