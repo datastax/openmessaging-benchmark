@@ -166,7 +166,7 @@ public class JMSBenchmarkDriver implements BenchmarkDriver {
                     ConsumerCallback consumerCallback) {
         try {
             String selector = config.messageSelector != null && !config.messageSelector.isEmpty() ? config.messageSelector : null;
-            if ( selectors != null ) {
+            if (selectors != null && selectors.size() > 0) {
                 int num_selector = Integer.parseInt(subscriptionName.substring(4,6)) % selectors.size();
                 selector = selectors.get(num_selector).selector;
                 log.info("Choosing selector {} for subscription {} gives: {}", num_selector, subscriptionName, selector);
