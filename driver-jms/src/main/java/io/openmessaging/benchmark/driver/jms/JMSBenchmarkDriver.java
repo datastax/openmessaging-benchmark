@@ -63,7 +63,7 @@ public class JMSBenchmarkDriver implements BenchmarkDriver {
     @Override
     public void initialize(File configurationFile, StatsLogger statsLogger) throws IOException {
         this.config = readConfig(configurationFile);
-	this.selectors = config.messageSelectors;
+        this.selectors = config.messageSelectors;
         log.info("JMS driver configuration: {}", writer.writeValueAsString(config));
 
         if (config.delegateForAdminOperationsClassName != null && !config.delegateForAdminOperationsClassName.isEmpty()) {
@@ -167,7 +167,8 @@ public class JMSBenchmarkDriver implements BenchmarkDriver {
         try {
             String selector = config.messageSelector != null && !config.messageSelector.isEmpty() ? config.messageSelector : null;
             if (selectors != null && selectors.size() > 0) {
-                int num_selector = Integer.parseInt(subscriptionName.substring(4,6)) % selectors.size();
+                log.info("Subscription id: {}; size: {}", subscriptionName.substring(4,7), selectors.size());
+                int num_selector = Integer.parseInt(subscriptionName.substring(4,7)) % selectors.size();
                 selector = selectors.get(num_selector).selector;
                 log.info("Choosing selector {} for subscription {} gives: {}", num_selector, subscriptionName, selector);
             }
