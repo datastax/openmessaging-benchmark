@@ -177,6 +177,7 @@ public class JMSBenchmarkDriver implements BenchmarkDriver {
             Destination destination = buildDestination(config, session, topic);
             MessageConsumer consumer;
             if (config.use20api) {
+                log.info("buildingConsumer of type {} on destination {}", config.consumerType, destination);
                 switch (config.consumerType) {
                     case SharedDurableConsumer:
                         if (config.destinationType != JMSConfig.DestinationType.Topic) {
@@ -202,7 +203,7 @@ public class JMSBenchmarkDriver implements BenchmarkDriver {
                 // but it is not supported in Confluent Kafka JMS client
                 consumer = session.createConsumer(destination, selector);
             }
-            return CompletableFuture.completedFuture(new JMSBenchmarkConsumer(connection, session, consumer, consumerCallback, config.use20api));
+            return CompletableFuture.completedFuture(new JMSBenchmarkConsumer(connection, session, consumer, consumerCallback, config.use20api, config.errorOnRedelivered));
         } catch (Exception err) {
             log.error("Failed to createConsumer '{}' for '{}'", subscriptionName, topic, err);
             CompletableFuture<BenchmarkConsumer> res = new CompletableFuture<>();

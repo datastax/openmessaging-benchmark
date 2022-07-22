@@ -38,6 +38,11 @@ public class JMSConfig
 
     public boolean use20api;
 
+    /**
+     * Print a error on the log (of the worker) in case of duplicate message
+     */
+    public boolean errorOnRedelivered = true;
+
     public DestinationType destinationType = DestinationType.Topic;
 
     public ConsumerType consumerType = ConsumerType.SharedDurableConsumer;
