@@ -46,10 +46,11 @@ public class Workload {
     public int consumerPerSubscription;
 
     /**
-     * For some testing we use a subscription for a selector. We craft these to consume messages so that each message
-     * is consumed by only one subscription. This config controls the backlog calculations.
+     * For some testing we apply a filter subscriptions and the subscription won't
+     * receive all the messages.
+     * This config controls the backlog calculations.
      */
-    public boolean subscriptionsAreSelectors = false;
+    public int messageRateReceivedForSubscription = 100;
 
     public int producerRate;
     /**
