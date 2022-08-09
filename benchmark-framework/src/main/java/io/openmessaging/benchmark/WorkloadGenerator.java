@@ -84,7 +84,7 @@ public class WorkloadGenerator implements AutoCloseable {
 	    // Pause to allow brokers to assign topic ownership (Pulsar async issues
 	    timer = new Timer();
 	    try {
-		Thread.sleep(5000);
+		Thread.sleep(10000);
 	    } catch (InterruptedException e) {
 		throw new RuntimeException(e);
 	    }
