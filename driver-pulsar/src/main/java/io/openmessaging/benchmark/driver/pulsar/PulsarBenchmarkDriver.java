@@ -174,10 +174,7 @@ public class PulsarBenchmarkDriver implements BenchmarkDriver {
 
     @Override
     public CompletableFuture<BenchmarkProducer> createProducer(String topic) {
-        String topicName = topic;
-        if (config.client.connectorTesting) {
-            topicName = config.producer.inputTopic;
-        }
+        String topicName = config.client.connectorTesting ? config.producer.inputTopic : topic;
         return producerBuilder.topic(topicName).createAsync()
                         .thenApply(PulsarBenchmarkProducer::new);
     }
@@ -185,10 +182,7 @@ public class PulsarBenchmarkDriver implements BenchmarkDriver {
     @Override
     public CompletableFuture<BenchmarkConsumer> createConsumer(String topic, String subscriptionName,
                     ConsumerCallback consumerCallback) {
-        String topicName = topic;
-        if (config.client.connectorTesting) {
-            topicName = config.consumer.outputTopic;
-        }
+        String topicName = config.client.connectorTesting ? config.consumer.outputTopic : topic;
         SubscriptionType subscriptionType = SubscriptionType.valueOf(config.consumer.subscriptionType);
         SubscriptionMode subscriptionMode = SubscriptionMode.valueOf(config.consumer.subscriptionMode);
         log.info("Creating consumer subscriptionType {} subscriptionMode {}", subscriptionType, subscriptionMode);
