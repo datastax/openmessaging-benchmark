@@ -20,7 +20,7 @@
 
 	<groupId>io.openmessaging.benchmark</groupId>
 	<artifactId>messaging-benchmark</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>Messaging Benchmark</name>
 	<packaging>pom</packaging>
 
@@ -58,7 +58,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<bookkeeper.version>4.14.0</bookkeeper.version>
-                <pulsar.version>2.10.3</pulsar.version>
+                <pulsar.version>3.0.0</pulsar.version>
                 <pulsar.groupId>org.apache.pulsar</pulsar.groupId>
 	</properties>
 
@@ -117,13 +117,13 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.13.2.1</version>
+			<version>2.14.2</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-yaml</artifactId>
-			<version>2.13.2</version>
+			<version>2.14.2</version>
 		</dependency>
 		<dependency>
 		  <groupId>io.netty</groupId>

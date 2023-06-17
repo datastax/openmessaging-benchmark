@@ -20,7 +20,7 @@
 	<parent>
 		<groupId>io.openmessaging.benchmark</groupId>
 		<artifactId>messaging-benchmark</artifactId>
-		<version>0.0.3-SNAPSHOT</version>
+		<version>0.0.4-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
@@ -44,7 +44,7 @@
 		  <groupId>com.datastax.oss</groupId>
                   <!-- the '-all' bundle contains a shaded version of Pulsar client-->
 		  <artifactId>pulsar-jms-all</artifactId>
-		  <version>3.2.1</version>
+		  <version>4.0.0</version>
 		</dependency>
 		<dependency>
 		  <groupId>com.google.guava</groupId>
