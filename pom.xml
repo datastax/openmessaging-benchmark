@@ -57,9 +57,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<bookkeeper.version>4.14.0</bookkeeper.version>
-                <pulsar.version>2.10.3</pulsar.version>
-                <pulsar.groupId>org.apache.pulsar</pulsar.groupId>
+		<bookkeeper.version>4.16.1</bookkeeper.version>
+        <pulsar.version>3.0.0</pulsar.version>
+        <pulsar.groupId>org.apache.pulsar</pulsar.groupId>
 	</properties>
 
 	<build>

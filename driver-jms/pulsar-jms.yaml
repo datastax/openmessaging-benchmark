@@ -29,13 +29,13 @@ delegateForAdminOperationsClassName: io.openmessaging.benchmark.driver.pulsar.Pu
 client:
   serviceUrl: ${pulsarServiceUrl:-pulsar://localhost:6650}
   httpUrl: ${pulsarAdminUrl:-http://localhost:8080}
-  clusterName: local
-  namespacePrefix: benchmark/ns
+  clusterName: standalone
+  namespacePrefix: public/default
   topicType: persistent
   persistence:
-    ensembleSize: 3
-    writeQuorum: 3
-    ackQuorum: 2
+    ensembleSize: 1
+    writeQuorum: 1
+    ackQuorum: 1
     deduplicationEnabled: false
   tlsAllowInsecureConnection: false
   tlsEnableHostnameVerification: false
