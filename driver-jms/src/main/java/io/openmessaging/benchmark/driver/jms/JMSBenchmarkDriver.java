@@ -18,13 +18,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Stream;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -62,14 +60,6 @@ public class JMSBenchmarkDriver implements BenchmarkDriver {
         this.config = readConfig(configurationFile);
         this.selectors = config.messageSelectors;
         log.info("JMS driver configuration: {}", writer.writeValueAsString(config));
-
-
-        org.apache.pulsar.shade.com.fasterxml.jackson.databind.ObjectMapper mapper
-                = new org.apache.pulsar.shade.com.fasterxml.jackson.databind.ObjectMapper();
-        log.info("Mapper {}, {}", mapper, mapper.getClass());
-        Arrays.asList(mapper.getClass().getMethods()).forEach(m ->{
-            log.info("Method {}", m);
-        });
 
         if (config.delegateForAdminOperationsClassName != null && !config.delegateForAdminOperationsClassName.isEmpty()) {
             log.info("Initializing Driver for Admin operations {}", config.delegateForAdminOperationsClassName);
