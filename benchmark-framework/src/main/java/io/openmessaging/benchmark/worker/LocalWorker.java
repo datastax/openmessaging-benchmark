@@ -282,10 +282,10 @@ public class LocalWorker implements Worker, ConsumerCallback {
 
                                 messagesSent.add(numberOfMessages);
                                 totalMessagesSent.add(numberOfMessages);
-                                messagesSentCounter.add(numberOfMessages);
+                                messagesSentCounter.addCount(numberOfMessages);
                                 long throughput = payloadData.length * numberOfMessages;
                                 bytesSent.add(throughput);
-                                bytesSentCounter.add(throughput);
+                                bytesSentCounter.addCount(throughput);
 
                                 gate.release();
 
@@ -364,7 +364,7 @@ public class LocalWorker implements Worker, ConsumerCallback {
         totalMessagesReceived.increment();
         messagesReceivedCounter.inc();
         bytesReceived.add(data.length);
-        bytesReceivedCounter.add(data.length);
+        bytesReceivedCounter.addCount(data.length);
 
         while (consumersArePaused) {
             try {
